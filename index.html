@@ -385,22 +385,23 @@
         }
 
         .advantage-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--card-dark);
             padding: 2rem;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0;
-            transform: translateY(50px);
+            transform: translateX(-100px) scale(0.9);
+            border-left: 4px solid var(--primary-red);
         }
 
         .advantage-card.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateX(0) scale(1);
         }
 
         .advantage-card:hover {
-            transform: translateY(-10px) rotateY(5deg);
+            transform: translateX(0) scale(1.05);
             box-shadow: 0 15px 40px rgba(213, 28, 28, 0.25);
         }
 
@@ -411,7 +412,7 @@
         }
 
         .advantage-card p {
-            color: var(--secondary-gray);
+            color: var(--text-secondary);
         }
 
         /* Process Steps */
@@ -470,412 +471,243 @@
             color: var(--text-secondary);
         }
 
-        /* Cases */
-        .cases-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        /* ==================================================== */
+        /* === CASES CAROUSEL STYLES (DESKTOP/TABLET) === */
+        /* ==================================================== */
+
+        .cases-container {
+            display: flex;
+            align-items: center;
             gap: 2rem;
+            width: 100%;
+            max-width: 100%;
         }
 
-        .case-card {
+        .carousel-wrapper {
+            flex: 1;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .cases-list {
+            display: flex;
+            gap: 2rem;
+            scroll-behavior: smooth;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0;
+            margin: 0;
+        }
+        
+        /* Hide scrollbar on desktop carousel */
+        .cases-list::-webkit-scrollbar {
+            height: 0;
+        }
+        .cases-list {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        /* === Desktop: 3 Cards Visible === */
+        .case-item {
+            flex: 0 0 350px; 
+            min-width: 350px;
+            max-width: 350px;
             background: var(--card-dark);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            transform: perspective(1000px) rotateY(-15deg);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: auto;
             border: 1px solid var(--border-dark);
         }
 
-        .case-card.visible {
-            opacity: 1;
-            transform: perspective(1000px) rotateY(0deg);
-        }
-
-        .case-card:hover {
-            transform: perspective(1000px) translateY(-10px) rotateY(3deg);
-            box-shadow: 0 20px 50px rgba(213, 28, 28, 0.2);
+        .case-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(213, 28, 28, 0.2);
         }
 
         .case-image {
             width: 100%;
             height: 200px;
             overflow: hidden;
-            position: relative;
-            background: #1a1a1a;
+            border-radius: 12px 12px 0 0;
         }
 
         .case-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.4s ease;
         }
 
-        .case-card:hover .case-image img {
-            transform: scale(1.08);
+        .case-item h3 {
+            font-size: 1.3rem;
+            color: white;
+            margin: 1rem 1rem 0.5rem 1rem;
+            padding: 0;
         }
 
-        .case-content {
-            padding: 1.5rem;
+        .case-item .details {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0.5rem 1rem;
+            line-height: 1.4;
         }
 
-        .case-content h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
+        .case-item .budget {
+            font-size: 0.95rem;
             color: var(--text-light);
+            margin: 0.5rem 1rem;
         }
 
-        .case-details {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .case-content p {
-            color: var(--text-secondary);
-        }
-
-        .case-result {
-            background: var(--card-dark-2);
-            padding: 1rem;
+        .case-item .result {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-dark);
             border-radius: 8px;
-            margin-top: 1rem;
-            border: 1px solid var(--border-dark-2);
+            margin: 0.75rem 1rem 1rem 1rem;
+            padding: 0.75rem;
         }
 
-        .case-result p {
-            color: var(--text-light);
+        .case-item .price {
+            color: var(--primary-red);
+            font-weight: bold;
+            margin: 0.3rem 0;
+            font-size: 1rem;
         }
 
-        .case-result strong {
+        .case-item .savings {
             color: var(--green-accent);
-        }
-
-        /* Reviews */
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .review-card {
-            background: var(--card-dark);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            transform: translateX(-100px) scale(0.9);
-            border-left: 4px solid var(--primary-red);
-        }
-
-        .review-card.visible {
-            opacity: 1;
-            transform: translateX(0) scale(1);
-        }
-
-        .review-card:hover {
-            transform: translateX(0) scale(1.05);
-            box-shadow: 0 15px 40px rgba(213, 28, 28, 0.25);
-        }
-
-        .review-author {
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-            color: var(--text-light);
-        }
-
-        .review-location {
-            color: var(--text-secondary);
+            margin: 0.3rem 0;
             font-size: 0.9rem;
-            margin-bottom: 1rem;
+            font-weight: 600;
         }
 
-        .review-text {
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-
-        /* FAQ */
-        .faq-list {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            background: var(--card-dark);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border-left: 3px solid transparent;
-            border: 1px solid var(--border-dark);
-        }
-
-        .faq-item:hover {
-            transform: translateX(10px);
-            box-shadow: 0 8px 25px rgba(213, 28, 28, 0.15);
-            border-left-color: var(--primary-red);
-        }
-
-        .faq-question {
-            font-weight: 700;
-            font-size: 1.125rem;
-            margin-bottom: 0.75rem;
+        .carousel-btn {
+            background: transparent;
+            border: none;
             color: var(--primary-red);
-        }
-
-        .faq-answer {
-            color: var(--text-secondary);
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: var(--dark-section-bg);
-            color: var(--white);
-            text-align: center;
-            padding: 4rem 2rem;
-            border-radius: 12px;
-            margin: 2rem;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--border-dark);
-        }
-
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .cta-section h2 {
-            color: var(--white);
-            margin-bottom: 1rem;
-        }
-
-        .cta-section p {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-buttons {
+            cursor: pointer;
+            padding: 0.5rem;
             display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn-white {
-            background: var(--text-light);
-            color: var(--primary-red);
-        }
-
-        .btn-white:hover {
-            background: var(--light-bg);
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 2000;
             align-items: center;
             justify-content: center;
-            padding: 1rem;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
         }
 
-        .modal.active {
-            display: flex;
+        .carousel-btn:hover {
+            filter: drop-shadow(0 0 8px rgba(213, 28, 28, 0.8));
+            transform: scale(1.15);
         }
 
-        .modal-content {
-            background: var(--card-dark);
-            padding: 2rem;
-            border-radius: 12px;
-            max-width: 500px;
-            width: 100%;
-            position: relative;
-            max-height: 90vh;
-            overflow-y: auto;
-            border: 1px solid var(--border-dark);
+        .carousel-btn:active {
+            transform: scale(0.9);
         }
 
-        .modal-content h2 {
-            color: var(--text-light);
+        .carousel-btn svg {
+            width: 32px;
+            height: 32px;
+            stroke-width: 2.5;
+            transition: all 0.3s ease;
         }
 
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--text-secondary);
-        }
+        /* ==================================================== */
+        /* === MOBILE FIXES: Horizontal Swiping Carousel === */
+        /* ==================================================== */
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text-light);
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid var(--border-dark);
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: inherit;
-            transition: border-color 0.3s;
-            background: var(--card-dark-2);
-            color: var(--text-light);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-red);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
-        }
-
-        .checkbox-group input {
-            width: auto;
-            margin-top: 0.25rem;
-        }
-
-        .checkbox-group label {
-            font-weight: normal;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--footer-dark);
-            color: var(--white);
-            padding: 3rem 2rem 1.5rem;
-            position: relative;
-        }
-
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent 0%, var(--primary-red) 50%, transparent 100%);
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .footer-logo {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--secondary-gray);
-        }
-
-        .footer-description {
-            color: var(--secondary-gray);
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-telegram {
-            color: var(--primary-red);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.125rem;
-            display: block;
-            margin-bottom: 1rem;
-        }
-
-        .footer-telegram:hover {
-            opacity: 0.8;
-        }
-
-        .footer-info {
-            color: var(--secondary-gray);
-            font-size: 0.9rem;
-            margin: 1rem 0;
-        }
-
-        .footer-privacy {
-            color: var(--secondary-gray);
-            font-size: 0.85rem;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(122, 122, 122, 0.3);
-        }
-
-        /* Success Message */
-        .success-message {
-            display: none;
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            background: var(--green-accent);
-            color: var(--white);
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 3000;
-            animation: slideIn 0.3s ease;
-        }
-
-        .success-message.active {
-            display: block;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
+        @media (max-width: 1024px) {
+            /* Hide buttons on tablet/mobile and enable scroll-snap */
+            .carousel-btn {
+                display: none;
             }
-            to {
-                transform: translateX(0);
-                opacity: 1;
+
+            .cases-list {
+                scroll-snap-type: x mandatory; /* Enable scroll snapping */
+                overflow-x: scroll;
+                gap: 1.5rem; /* Ensure gap is defined for tablet view */
+                -webkit-overflow-scrolling: touch; /* Better iOS scrolling */
+            }
+
+            /* Tablet: 2 Cards Visible with snap */
+            .case-item {
+                flex: 0 0 calc(50% - 1.5rem); 
+                min-width: calc(50% - 1.5rem);
+                max-width: calc(50% - 1.5rem);
+                scroll-snap-align: start; /* Snap to the start of the card */
             }
         }
+        
+        @media (max-width: 768px) {
+            /* Remove horizontal padding from section to allow full bleed */
+            section.cases-section {
+                padding: 4rem 0 5rem 0;
+            }
+            
+            .carousel-wrapper {
+                /* Add padding to wrapper to create space from the screen edges */
+                padding: 0 1rem; 
+                overflow-x: scroll; /* Ensure wrapper can scroll */
+            }
 
-        /* Responsive */
+            .cases-list {
+                gap: 1rem; /* Smaller gap on small screen */
+            }
+            
+            .case-item {
+                /* Full width card minus the wrapper padding (2rem total) and list gap (1rem). 
+                   This ensures one card is visible at a time with surrounding space. 
+                   100vw - 2rem - 1rem = 100vw - 3rem (or 100vw - 48px)
+                */
+                flex: 0 0 calc(100vw - 3rem); 
+                min-width: calc(100vw - 3rem); 
+                max-width: calc(100vw - 3rem);
+                scroll-snap-align: start; /* Snap to the start of the card */
+                
+                /* Compact layout adjustments for mobile cards */
+                padding: 0;
+            }
+            
+            .case-image {
+                height: 100px; /* Smaller image */
+            }
+
+            .case-item h3 {
+                font-size: 1.1rem;
+                margin: 0.75rem 1rem 0.2rem 1rem;
+            }
+
+            .case-item .details {
+                font-size: 0.75rem;
+                margin: 0 1rem;
+            }
+            
+            .case-item .budget {
+                font-size: 0.85rem;
+                margin: 0.5rem 1rem 0 1rem;
+            }
+
+            .case-item .result {
+                margin: 0.75rem 1rem 1rem 1rem;
+                padding: 0.5rem;
+            }
+
+            .case-item .price, .case-item .savings {
+                font-size: 0.85rem;
+            }
+            
+            /* General mobile overrides for other sections */
+            section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+                max-width: 100%;
+            }
+        }
+        
+        /* General Mobile Overrides */
         @media (max-width: 768px) {
             .hamburger {
                 display: flex;
@@ -892,6 +724,7 @@
                 box-shadow: 0 4px 10px rgba(0,0,0,0.5);
                 transition: left 0.3s;
                 border-bottom: 1px solid var(--border-dark);
+                z-index: 1100;
             }
 
             nav ul.active {
@@ -900,11 +733,6 @@
 
             .hero h1 {
                 font-size: 2rem;
-            }
-
-            .hero::before,
-            .hero::after {
-                display: none;
             }
 
             .hero-subtitle {
@@ -918,170 +746,346 @@
             .step {
                 flex-direction: column;
             }
+            
+            .reviews-grid,
+            .advantages-grid {
+                grid-template-columns: 1fr;
+            }
 
             .success-message {
                 right: 1rem;
                 left: 1rem;
             }
         }
+
+        /* Review Card Style */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: var(--card-dark-2);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border-top: 4px solid var(--primary-red);
+            transition: transform 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(213, 28, 28, 0.1);
+        }
+
+        .review-author {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .review-location {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .review-text {
+            font-style: italic;
+            color: var(--text-light);
+        }
+
+        /* FAQ Style */
+        .faq-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--card-dark);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-dark);
+        }
+
+        .faq-question {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            position: relative;
+            color: var(--text-light);
+        }
+
+        .faq-question::after {
+            content: '+';
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%) rotate(0deg);
+            transition: transform 0.3s;
+            color: var(--primary-red);
+            font-size: 1.5rem;
+        }
+
+        .faq-item.active .faq-question::after {
+            content: '–';
+            transform: translateY(-50%) rotate(0deg);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+            color: var(--text-secondary);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px; /* Large enough to contain any answer */
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(90deg, #1a1a1a 0%, #0f0f0f 100%);
+            max-width: 100%;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-dark);
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--footer-dark);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-info {
+            font-size: 0.8rem;
+            color: var(--border-dark-2);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-privacy {
+            font-size: 0.75rem;
+            color: var(--border-dark);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 2000;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--card-dark);
+            padding: 2rem;
+            border-radius: 12px;
+            position: relative;
+            width: 90%;
+            max-width: 450px;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--primary-red);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-dark);
+            border-radius: 6px;
+            background: var(--dark-section-bg);
+            color: var(--text-light);
+        }
+
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: var(--green-accent);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(12, 143, 67, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+            z-index: 2100;
+            text-align: center;
+        }
+
+        .success-message.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) scale(1);
+        }
+
+        /* Decorative divider */
+        .divider {
+            height: 5px;
+            width: 80%;
+            margin: 2rem auto;
+            background: linear-gradient(90deg, transparent 0%, var(--primary-red) 60%, transparent 100%);
+            border-radius: 4px;
+        }
+
+        /* Review Card Style */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: var(--card-dark-2);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border-top: 4px solid var(--primary-red);
+            transition: transform 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(213, 28, 28, 0.1);
+        }
+
+        .review-author {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .review-location {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .review-text {
+            font-style: italic;
+            color: var(--text-light);
+        }
     </style>
-<style>
-@media (max-width: 768px) {
-  body {
-    font-size: 14px;
-    padding: 0 1rem;
-  }
-
-  header .header-container,
-  .hero-container,
-  section,
-  .modal-content {
-    padding: 0 1rem;
-    width: 100%;
-    max-width: 100%;
-  }
-
-  nav ul {
-    flex-direction: column;
-    position: fixed;
-    top: 70px;
-    left: -100%;
-    width: 100%;
-    height: calc(100% - 70px);
-    background-color: var(--dark-section-bg);
-    padding: 2rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    transition: left 0.3s ease;
-    border-bottom: 1px solid var(--border-dark);
-    z-index: 1100;
-  }
-
-  nav ul.active {
-    left: 0;
-  }
-
-  nav ul li {
-    margin-bottom: 1.5rem;
-  }
-
-  .hamburger {
-    display: flex;
-  }
-
-  .faq-list,
-  .cases-grid,
-  .advantages-grid,
-  .reviews-grid {
-    display: grid;
-    grid-template-columns: 1fr !important;
-  }
-
-  .faq-item {
-    padding: 1rem;
-    font-size: 0.95rem;
-  }
-
-  button.btn {
-    width: 100%;
-    padding: 1rem;
-    font-size: 1.1rem;
-  }
-
-  .modal-content {
-    max-width: 90vw;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-}
-@media (max-width: 768px) {
-  .auction-cards,
-  .advantages-grid,
-  .cases-grid,
-  .reviews-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-  }
-
-  .auction-card,
-  .advantage-item,
-  .case-item,
-  .review-item {
-    display: block !important;
-    width: 100% !important;
-    margin-bottom: 1rem;
-  }
-
-  .auction-card p,
-  .advantage-item p,
-  .case-item p,
-  .review-item p {
-    font-size: 14px;
-  }
-
-  .auction-cards,
-  .advantages-grid,
-  .cases-grid,
-  .reviews-grid,
-  .auction-card,
-  .advantage-item,
-  .case-item,
-  .review-item {
-    overflow: visible !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-}
-@media (max-width: 768px) {
-  .auction-cards,
-  .advantages-grid,
-  .cases-grid,
-  .reviews-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    overflow: visible !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-
-  .auction-card,
-  .advantage-item,
-  .case-item,
-  .review-item {
-    display: block !important;
-    width: 100% !important;
-    margin-bottom: 1rem;
-  }
-
-  .auction-card p,
-  .advantage-item p,
-  .case-item p,
-  .review-item p {
-    font-size: 14px !important;
-  }
-}
-</style>
 </head>
 <body>
     <!-- Header -->
     <header>
        <div class="header-container">
-    <div class="logo">
-      <img src="logo.png" alt="AutoSeller24 logo" class="logo-image" />
-      </div>
-    <nav>
-      <ul id="navMenu">
-        <li><a href="#cases">Кейсы</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#contacts">Контакты</a></li>
-        <li><button class="btn btn-primary" onclick="openModal()">Оставить заявку</button></li>
-      </ul>
-    </nav>
-    <button class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </div>
+            <div class="logo">
+                <img src="https://placehold.co/42x42/d51c1c/ffffff/png?text=AS" alt="AutoSeller24 logo" class="logo-image" />
+                <div class="logo-text">AutoSeller<span class="logo-accent">24</span></div>
+            </div>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#cases">Кейсы</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contacts">Контакты</a></li>
+                    <li><button class="btn btn-primary" onclick="openModal()">Оставить заявку</button></li>
+                </ul>
+            </nav>
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
     </header>
 
     <!-- Hero Section -->
@@ -1092,7 +1096,7 @@
                         
             <div class="hero-buttons">
                 <button class="btn btn-primary" onclick="openModal()">Оставить заявку</button>
-                <a href="https://t.me/AutoSeller24?start=direct_demo" target="_blank" class="btn btn-primary">Перейти в Telegram</a>
+                <a href="https://t.me/AutoSeller24?start=direct_demo" target="_blank" class="btn btn-secondary">Перейти в Telegram</a>
             </div>
 
             <div class="hero-cards">
@@ -1176,62 +1180,88 @@
         </div>
     </section>
 
-    <!-- Cases Section -->
+    <!-- Cases Section - Now Swipable on Mobile -->
     <section id="cases" class="cases-section">
         <h2>Кейсы</h2>
-        <div class="cases-grid">
-            <div class="case-card">
-                <div class="case-image">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='skyGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2387CEEB;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23e0f6ff;stop-opacity:1' /%3E%3C/linearGradient%3E%3ClinearGradient id='carGrad1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23c0c0c0;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23808080;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23skyGrad)'/%3E%3Crect x='0' y='200' width='400' height='100' fill='%23333333'/%3E%3Cpath d='M80 180 L120 140 L280 140 L320 180 L310 220 L90 220 Z' fill='url(%23carGrad1)' stroke='%23606060' stroke-width='3'/%3E%3Crect x='140' y='155' width='40' height='25' fill='%234a90e2' opacity='0.6'/%3E%3Crect x='220' y='155' width='40' height='25' fill='%234a90e2' opacity='0.6'/%3E%3Cellipse cx='130' cy='220' rx='22' ry='22' fill='%23222222'/%3E%3Ccircle cx='130' cy='220' r='12' fill='%23444444'/%3E%3Cellipse cx='270' cy='220' rx='22' ry='22' fill='%23222222'/%3E%3Ccircle cx='270' cy='220' r='12' fill='%23444444'/%3E%3Cpath d='M90 185 L100 175 L130 175 L138 185 Z' fill='%23ffeb3b' opacity='0.8'/%3E%3Ctext x='200' y='195' font-family='Arial, sans-serif' font-size='24' fill='white' text-anchor='middle' font-weight='bold'%3EPRIUS%3C/text%3E%3C/svg%3E" alt="Toyota Prius 2018" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-                <div class="case-content">
-                    <h3>Toyota Prius 2018</h3>
-                    <div class="case-details">
-                        Лот: USS Tokyo • Оценка: 4.5 балла • Пробег: 82 000 км
+        <div class="cases-container">
+            <!-- Hidden on mobile -->
+            <button class="carousel-btn prev-btn" onclick="scrollCases(-1)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+
+            <div class="carousel-wrapper">
+                <div class="cases-list" id="casesListMobile">
+                    <div class="case-item">
+                        <div class="case-image"><img src=Мерседес.jpg></div>
+                        <h3>Toyota Prius 2018</h3>
+                        <p class="details">Лот: USS Tokyo • Оценка: 4.5 балла • Пробег: 82 000 км ⭐⭐⭐⭐⭐</p>
+                        <p class="budget">Бюджет клиента: 1 650 000 ₽</p>
+                        <div class="result"><p class="price">Итого: 1 540 000 ₽</p><p class="savings">Экономия: ~110 000 ₽</p></div>
                     </div>
-                    <p>Бюджет клиента: 1 650 000 ₽</p>
-                    <div class="case-result">
-                        <p><strong>Итого: 1 540 000 ₽</strong></p>
-                        <p>Экономия: ~110 000 ₽</p>
+                    <div class="case-item">
+                        <div class="case-image"><img src="https://placehold.co/350x200/d51c1c/ffffff/png?text=Honda+Fit" onerror="this.onerror=null;this.src='https://placehold.co/350x200/222/ddd?text=Honda+Fit'" alt="Honda Fit"></div>
+                        <h3>Honda Fit 2019</h3>
+                        <p class="details">Лот: JU Fukuoka • Оценка: 4 балла • Пробег: 68 000 км ⭐⭐⭐⭐⭐</p>
+                        <p class="budget">Бюджет клиента: 1 200 000 ₽</p>
+                        <div class="result"><p class="price">Итого: 1 120 000 ₽</p><p class="savings">Экономия: ~80 000 ₽</p></div>
+                    </div>
+                    <div class="case-item">
+                        <div class="case-image"><img src="https://placehold.co/350x200/d51c1c/ffffff/png?text=Subaru+Forester" onerror="this.onerror=null;this.src='https://placehold.co/350x200/222/ddd?text=Subaru+Forester'" alt="Subaru Forester"></div>
+                        <h3>Subaru Forester 2017</h3>
+                        <p class="details">Лот: TAA Yokohama • Оценка: 4 балла • Пробег: 95 000 км ⭐⭐⭐⭐⭐</p>
+                        <p class="budget">Бюджет клиента: 1 870 000 ₽</p>
+                        <div class="result"><p class="price">Итого: 1 780 000 ₽</p><p class="savings">Экономия: ~90 000 ₽</p></div>
+                    </div>
+                    <div class="case-item">
+                        <div class="case-image"><img src="https://placehold.co/350x200/d51c1c/ffffff/png?text=Mazda+Axela" onerror="this.onerror=null;this.src='https://placehold.co/350x200/222/ddd?text=Mazda+Axela'" alt="Mazda Axela"></div>
+                        <h3>Mazda Axela 2016</h3>
+                        <p class="details">Лот: USS Kobe • Оценка: 4.5 балла • Пробег: 74 000 км ⭐⭐⭐⭐⭐</p>
+                        <p class="budget">Бюджет клиента: 1 300 000 ₽</p>
+                        <div class="result"><p class="price">Итого: 1 210 000 ₽</p><p class="savings">Экономия: ~90 000 ₽</p></div>
+                    </div>
+                    <div class="case-item">
+                        <div class="case-image"><img src="https://placehold.co/350x200/d51c1c/ffffff/png?text=Honda+Accord" onerror="this.onerror=null;this.src='https://placehold.co/350x200/222/ddd?text=Honda+Accord'" alt="Honda Accord"></div>
+                        <h3>Honda Accord 2015</h3>
+                        <p class="details">Лот: TAA Yokohama • Оценка: 4 балла • Пробег: 88 000 км ⭐⭐⭐⭐⭐</p>
+                        <p class="budget">Бюджет клиента: 1 500 000 ₽</p>
+                        <div class="result"><p class="price">Итого: 1 390 000 ₽</p><p class="savings">Экономия: ~110 000 ₽</p></div>
+                    </div>
+                    <div class="case-item">
+                        <div class="case-image"><img src="https://placehold.co/350x200/d51c1c/ffffff/png?text=Honda+Civic" onerror="this.onerror=null;this.src='https://placehold.co/350x200/222/ddd?text=Honda+Civic'" alt="Honda Civic"></div>
+                        <h3>Honda Civic 2017</h3>
+                        <p class="details">Лот: JU Fukuoka • Оценка: 4.5 балла • Пробег: 71 000 км ⭐⭐⭐⭐⭐</p>
+                        <p class="budget">Бюджет клиента: 1 400 000 ₽</p>
+                        <div class="result"><p class="price">Итого: 1 295 000 ₽</p><p class="savings">Экономия: ~105 000 ₽</p></div>
+                    </div>
+                    <div class="case-item">
+                        <div class="case-image"><img src="https://placehold.co/350x200/d51c1c/ffffff/png?text=Toyota+Camry" onerror="this.onerror=null;this.src='https://placehold.co/350x200/222/ddd?text=Toyota+Camry'" alt="Toyota Camry"></div>
+                        <h3>Toyota Camry 2018</h3>
+                        <p class="details">Лот: USS Tokyo • Оценка: 5 баллов • Пробег: 62 000 км ⭐⭐⭐⭐⭐</p>
+                        <p class="budget">Бюджет клиента: 2 100 000 ₽</p>
+                        <div class="result"><p class="price">Итого: 1 950 000 ₽</p><p class="savings">Экономия: ~150 000 ₽</p></div>
+                    </div>
+                    <div class="case-item">
+                        <div class="case-image"><img src="https://placehold.co/350x200/d51c1c/ffffff/png?text=Nissan+X-Trail" onerror="this.onerror=null;this.src='https://placehold.co/350x200/222/ddd?text=Nissan+X-Trail'" alt="Nissan X-Trail"></div>
+                        <h3>Nissan X-Trail 2016</h3>
+                        <p class="details">Лот: TAA Nagoya • Оценка: 4 балла • Пробег: 85 000 км ⭐⭐⭐⭐⭐</p>
+                        <p class="budget">Бюджет клиента: 1 750 000 ₽</p>
+                        <div class="result"><p class="price">Итого: 1 640 000 ₽</p><p class="savings">Экономия: ~110 000 ₽</p></div>
                     </div>
                 </div>
             </div>
-            <div class="case-card">
-                <div class="case-image">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='skyGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%235dade2;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23d4f1f9;stop-opacity:1' /%3E%3C/linearGradient%3E%3ClinearGradient id='carGrad2' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%231a1a1a;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23404040;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23skyGrad2)'/%3E%3Crect x='0' y='200' width='400' height='100' fill='%23444444'/%3E%3Cpath d='M90 185 L125 145 L275 145 L310 185 L300 218 L100 218 Z' fill='url(%23carGrad2)' stroke='%23555555' stroke-width='3'/%3E%3Crect x='145' y='162' width='35' height='23' fill='%234a90e2' opacity='0.7'/%3E%3Crect x='220' y='162' width='35' height='23' fill='%234a90e2' opacity='0.7'/%3E%3Cellipse cx='135' cy='218' rx='20' ry='20' fill='%23111111'/%3E%3Ccircle cx='135' cy='218' r='11' fill='%23333333'/%3E%3Cellipse cx='265' cy='218' rx='20' ry='20' fill='%23111111'/%3E%3Ccircle cx='265' cy='218' r='11' fill='%23333333'/%3E%3Cpath d='M100 190 L108 180 L135 180 L142 190 Z' fill='%23ffeb3b' opacity='0.9'/%3E%3Ctext x='200' y='198' font-family='Arial, sans-serif' font-size='26' fill='white' text-anchor='middle' font-weight='bold'%3EFIT%3C/text%3E%3C/svg%3E" alt="Honda Fit 2019" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-                <div class="case-content">
-                    <h3>Honda Fit 2019</h3>
-                    <div class="case-details">
-                        Лот: JU Fukuoka • Оценка: 4 балла • Пробег: 68 000 км
-                    </div>
-                    <p>Бюджет клиента: 1 200 000 ₽</p>
-                    <div class="case-result">
-                        <p><strong>Итого: 1 120 000 ₽</strong></p>
-                        <p>Экономия: ~80 000 ₽</p>
-                    </div>
-                </div>
-            </div>
-            <div class="case-card">
-                <div class="case-image">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='skyGrad3' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%236fa8dc;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23c9e6f7;stop-opacity:1' /%3E%3C/linearGradient%3E%3ClinearGradient id='carGrad3' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%234a4a4a;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%232a2a2a;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23skyGrad3)'/%3E%3Crect x='0' y='200' width='400' height='100' fill='%23555555'/%3E%3Cpath d='M75 180 L115 135 L285 135 L325 180 L315 220 L85 220 Z' fill='url(%23carGrad3)' stroke='%23666666' stroke-width='3'/%3E%3Crect x='135' y='155' width='45' height='25' fill='%234a90e2' opacity='0.65'/%3E%3Crect x='220' y='155' width='45' height='25' fill='%234a90e2' opacity='0.65'/%3E%3Cellipse cx='125' cy='220' rx='24' ry='24' fill='%231a1a1a'/%3E%3Ccircle cx='125' cy='220' r='13' fill='%233a3a3a'/%3E%3Cellipse cx='275' cy='220' rx='24' ry='24' fill='%231a1a1a'/%3E%3Ccircle cx='275' cy='220' r='13' fill='%233a3a3a'/%3E%3Cpath d='M85 185 L95 173 L128 173 L137 185 Z' fill='%23ffeb3b' opacity='0.85'/%3E%3Ctext x='200' y='193' font-family='Arial, sans-serif' font-size='20' fill='white' text-anchor='middle' font-weight='bold'%3EFORESTER%3C/text%3E%3C/svg%3E" alt="Subaru Forester 2017" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-                <div class="case-content">
-                    <h3>Subaru Forester 2017</h3>
-                    <div class="case-details">
-                        Лот: TAA Yokohama • Оценка: 4 балла • Пробег: 95 000 км
-                    </div>
-                    <p>Бюджет клиента: 1 870 000 ₽</p>
-                    <div class="case-result">
-                        <p><strong>Итого: 1 780 000 ₽</strong></p>
-                        <p>Экономия: ~90 000 ₽</p>
-                    </div>
-                </div>
-            </div>
+
+            <!-- Hidden on mobile -->
+            <button class="carousel-btn next-btn" onclick="scrollCases(1)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
         </div>
     </section>
 
-    <!-- Reviews Section -->
+        <!-- Reviews Section -->
     <section class="reviews-section">
         <h2>Отзывы клиентов</h2>
         <div class="reviews-grid">
@@ -1282,7 +1312,7 @@
         <p>Оставьте заявку на сайте или напишите в наш Telegram — ответим за 15 минут и пришлём подходящие лоты сегодня.</p>
         <div class="cta-buttons">
     <button class="btn btn-primary" onclick="openModal()">Оставить заявку</button>
-    <a href="https://t.me/AutoSeller24?start=directdemo" target="_blank" class="btn btn-primary">Перейти в Telegram</a>
+    <a href="https://t.me/AutoSeller24?start=directdemo" target="_blank" class="btn btn-secondary">Перейти в Telegram</a>
 </div>
     </div>
 
@@ -1298,28 +1328,38 @@
 
     <!-- Modal Form -->
     <div class="modal" id="modal">
-  <div class="modal-content">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    <h2>Оставить заявку</h2>
-    <p style="color: var(--secondary-gray); margin-bottom: 1.5rem;">
-      Заполните форму для связи, и мы свяжемся с вами в течение 15 минут.
-    </p>
-    <form id="contactForm">
-      <div class="form-group">
-        <label for="name">Имя</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      <div class="form-group">
-        <label for="phone">Телефон для связи</label>
-        <input type="tel" id="phone" name="phone" required>
-      </div>
-      <p style="font-size:0.95rem; color:var(--text-secondary); margin-bottom:1.2rem;">
-        Отправляя заявку, вы соглашаетесь на обработку персональных данных.
-      </p>
-      <button type="submit" class="btn btn-primary" style="width:100%;">Отправить</button>
-    </form>
-  </div>
-</div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h2>Оставить заявку</h2>
+            <p style="color: var(--secondary-gray); margin-bottom: 1.5rem;">
+                Заполните форму для связи, и мы свяжемся с вами в течение 15 минут.
+            </p>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Имя</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Телефон для связи</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <!-- Adding optional fields for better user experience -->
+                <div class="form-group">
+                    <label for="budget">Бюджет (руб., необязательно)</label>
+                    <input type="text" id="budget" name="budget">
+                </div>
+                <div class="form-group">
+                    <label for="model">Желаемая модель (необязательно)</label>
+                    <input type="text" id="model" name="model">
+                </div>
+                
+                <p style="font-size:0.95rem; color:var(--text-secondary); margin-bottom:1.2rem;">
+                    Отправляя заявку, вы соглашаетесь на обработку персональных данных.
+                </p>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Отправить</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Success Message -->
     <div class="success-message" id="successMessage">
@@ -1327,7 +1367,7 @@
     </div>
 
     <script>
-        // Application state
+        // Application state (mock storage)
         const applicationState = {
             applications: []
         };
@@ -1353,9 +1393,12 @@
         });
 
         // Close menu when clicking on a link
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
+        document.querySelectorAll('nav a, #navMenu button').forEach(el => {
+            el.addEventListener('click', () => {
+                // Wait for the modal or scroll to trigger before closing
+                setTimeout(() => {
+                    navMenu.classList.remove('active');
+                }, 300); 
             });
         });
 
@@ -1394,7 +1437,7 @@
             }
         });
 
-        // Form submission
+        // Form submission (using mock state storage)
         document.getElementById('contactForm').addEventListener('submit', (e) => {
             e.preventDefault();
             
@@ -1406,15 +1449,11 @@
                 timestamp: new Date().toISOString()
             };
 
-            // Store in application state
             applicationState.applications.push(formData);
-            // Reset form
             e.target.reset();
 
-            // Close modal
             closeModal();
 
-            // Show success message
             const successMessage = document.getElementById('successMessage');
             successMessage.classList.add('active');
 
@@ -1426,8 +1465,25 @@
             this.classList.remove('active');
         });
 
+        // FAQ accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const parentItem = question.closest('.faq-item');
+                const wasActive = parentItem.classList.contains('active');
+                
+                // Close all other items
+                document.querySelectorAll('.faq-item.active').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Toggle current item
+                if (!wasActive) {
+                    parentItem.classList.add('active');
+                }
+            });
+        });
+
         // ============ DYNAMIC SCROLL APPEAR ===============
-        // Advantages animation
         function appearByScroll(selector, className, delay=120) {
             const items = document.querySelectorAll(selector);
             const io = new IntersectionObserver((entries, observer) => {
@@ -1446,7 +1502,7 @@
         }
         appearByScroll('.advantage-card','visible', 120);
         appearByScroll('.hero-card', 'visible', 120);
-        appearByScroll('.case-card', 'visible', 180);
+        // Note: Removing .case-card from immediate visibility check since it's a carousel now
         appearByScroll('.review-card', 'visible', 120);
 
         // Process steps, drawn one by one
@@ -1466,58 +1522,34 @@
         }, { threshold: 0.2 } );
         if(stepEls.length) ioSteps.observe(stepEls[0]);
 
-        // Parallax in hero
-        const hero = document.querySelector('.hero');
-        let parallaxY = 0;
-        window.addEventListener('scroll', function() {
-            const scrollTop = window.scrollY;
-            parallaxY = scrollTop*0.18;
-            hero.style.backgroundPosition = `center ${parallaxY}px`;
-            // Decorative floats in CTA section
-            const cta = document.querySelector('.cta-section');
-            if(cta) cta.style.backgroundPosition = `center ${Math.floor(scrollTop*0.14)}px`;
-        });
+        // Carousel buttons function (used only on desktop/tablet)
+        function scrollCases(direction) {
+            const list = document.querySelector('.cases-list');
+            if (!list) return;
 
-        // Animated number counter for price
-        function animateCount(numEl, start, end, duration=1200) {
-            const step = (end-start) / (duration/22);
-            let val = start;
-            function run() {
-                val += step;
-                if (val>=end) { numEl.textContent = end.toLocaleString(); return; }
-                numEl.textContent = Math.floor(val).toLocaleString();
-                requestAnimationFrame(run);
+            // Use window.innerWidth to determine if we are in mobile/tablet mode
+            if (window.innerWidth <= 1024) {
+                // Rely on CSS scroll-snap for touch devices
+                return;
             }
-            run();
-        }
-        // When advantages section is visible, animate counter
-        const priceCounter = document.createElement('div');
-        priceCounter.style.fontSize = '2rem';
-        priceCounter.style.fontWeight = 'bold';
-        priceCounter.style.color = 'var(--primary-red)';
-        priceCounter.style.marginBottom = '10px';
-        priceCounter.textContent = '0';
-        let counterAnimated = false;
-        window.addEventListener('DOMContentLoaded', () => {
-            const advSection = document.querySelector('.advantages-section');
-            const advGrid = advSection ? advSection.querySelector('.advantages-grid') : null;
-            if(advGrid) advGrid.insertBefore(priceCounter, advGrid.firstChild);
-            const ioCounter = new IntersectionObserver((entries)=>{
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && !counterAnimated) {
-                        animateCount(priceCounter, 0, 30000, 1600);
-                        counterAnimated = true;
-                        ioCounter.disconnect();
-                    }
-                });
-            },{threshold: 0.4});
-            if(advSection) ioCounter.observe(advSection);
-        });
+            
+            const firstItem = list.querySelector('.case-item');
+            if (!firstItem) return;
 
-        // === Animated stars in reviews ===
-        document.querySelectorAll('.case-card').forEach(card => {
-            // Just for visual: n stars & pulse
-            const details = card.querySelector('.case-details');
+            // Get item width and gap dynamically for precise scrolling on desktop
+            const itemWidth = firstItem.offsetWidth;
+            const gapStyle = window.getComputedStyle(list).getPropertyValue('gap');
+            const gap = parseFloat(gapStyle) || 32; // Default to 32px (2rem) for desktop
+
+            const scrollAmount = itemWidth + gap;
+            const finalScroll = direction > 0 ? scrollAmount : -scrollAmount;
+            
+            list.scrollBy({ left: finalScroll, behavior: 'smooth' });
+        }
+        
+        // Animated stars in cases
+        document.querySelectorAll('.case-item').forEach(card => {
+            const details = card.querySelector('.details');
             if (details) {
                 let stars = '';
                 let ratingMatch = details.textContent.match(/Оценка: ([\d\.]+)/);
@@ -1525,27 +1557,16 @@
                 for(let i=1; i<=5; i++){
                     stars += `<span class="star" style="color:${i<=rating?'#ffd700':'#ecebd5'};display:inline-block;animation:pulseStar 1s infinite ${i*0.2}s;">&#9733;</span>`;
                 }
-                details.innerHTML += ' '+stars;
+                // Replace the existing star text (⭐⭐⭐⭐⭐) with the custom stars
+                details.innerHTML = details.innerHTML.replace('⭐⭐⭐⭐⭐', ' '+stars);
             }
         });
-        // Star pulse animation
+        
+        // Star pulse animation CSS (added once)
         const style = document.createElement('style');
-        style.innerHTML = `@keyframes pulseStar{0%,100%{transform:scale(1);}50%{transform:scale(1.12);filter:drop-shadow(0 0 2px var(--primary-red));}}`;
+        style.innerHTML += `@keyframes pulseStar{0%,100%{transform:scale(1);}50%{transform:scale(1.12);filter:drop-shadow(0 0 2px var(--primary-red));}}`;
         document.head.appendChild(style);
 
-        // Decorative SVG/gradients
-        function insertDivider(section, direction='horizontal'){
-            const div = document.createElement('div');
-            div.style.height = direction==='horizontal'?'5px':'80px';
-            div.style.width = direction==='horizontal'?'80%':'5px';
-            div.style.margin = direction==='horizontal'?'2rem auto':'auto 2rem';
-            div.style.background = 'linear-gradient(90deg, transparent 0%, #d51c1c 60%, transparent 100%)';
-            div.style.borderRadius = '4px';
-            section.parentNode.insertBefore(div, section.nextSibling);
-        }
-        document.querySelectorAll('section').forEach((sec,i) => {
-            if(i!==0 && i<5 && (sec.className||'').indexOf('cta-section')===-1) insertDivider(sec);
-        });
     </script>
 </body>
 </html>
