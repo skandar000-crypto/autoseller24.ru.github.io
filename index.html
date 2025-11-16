@@ -686,18 +686,36 @@
         }
 
         /* Modal */
-        .modal {
+                .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
             z-index: 2000;
             align-items: center;
             justify-content: center;
             padding: 1rem;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .modal.active {
@@ -706,29 +724,222 @@
 
         .modal-content {
             background: var(--card-dark);
-            padding: 2rem;
-            border-radius: 12px;
-            max-width: 500px;
+            padding: 0;
+            border-radius: 20px;
+            max-width: 480px;
             width: 100%;
             position: relative;
             max-height: 90vh;
-            overflow-y: auto;
-            border: 1px solid var(--border-dark);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .modal-header {
+            padding: 2.5rem 2.5rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .modal-content h2 {
             color: var(--text-light);
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .modal-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0;
         }
 
         .modal-close {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 2rem;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             color: var(--text-secondary);
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            transform: rotate(90deg);
+        }
+
+        .modern-form {
+            padding: 2rem 2.5rem 2.5rem;
+        }
+
+        .floating-input {
+    position: relative;
+    margin-bottom: 1.75rem;
+}
+
+.floating-input input {
+    width: 100%;
+    height: 3.2rem;
+    padding: 1rem 0.75rem 0.5rem 0.75rem;  /* ← Добавьте padding-top */
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: var(--text-light);
+    font-size: 1rem;
+    font-weight: 400;
+    outline: none;
+    box-sizing: border-box;
+    line-height: 1.2;
+}
+
+.floating-input label {
+    position: absolute;
+    left: 0.75rem;
+    top: 1rem;  /* ← Начальная позиция внутри поля */
+    transform: translateY(0);  /* ← Без трансформации вначале */
+    color: var(--text-secondary);
+    font-size: 1rem;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    background: transparent;
+    padding: 0 0.25rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+/* Когда поле в фокусе или заполнено */
+.floating-input input:focus ~ label,
+.floating-input input:not(:placeholder-shown) ~ label {
+    top: 0.35rem;  /* ← Поднимаем вверх */
+    font-size: 0.75rem;
+    color: var(--accent-color);
+    font-weight: 600;
+    background: var(--card-dark);
+    padding: 0 0.25rem;
+}
+
+.floating-input input:focus {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent-color);
+}
+
+.input-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-color), #4169E1);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    border-radius: 2px;
+}
+
+.floating-input input:focus ~ .input-border {
+    transform: scaleX(1);
+}
+
+        .input-hint {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .form-privacy {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-privacy svg {
+            flex-shrink: 0;
+            margin-top: 0.15rem;
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        .form-privacy span {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: #d51c1c;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(220, 38, 38, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit svg {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-submit:hover svg {
+            transform: translateX(4px);
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                border-radius: 20px 20px 0 0;
+                max-height: 95vh;
+                margin-top: auto;
+            }
+
+            .modal-header {
+                padding: 2rem 1.5rem 1.25rem;
+            }
+
+            .modal-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .modern-form {
+                padding: 1.5rem 1.5rem 2rem;
+            }
+
+            .modal-close {
+                width: 36px;
+                height: 36px;
+            }
         }
 
         .form-group {
@@ -819,23 +1030,46 @@
             margin-bottom: 1.5rem;
         }
 
-        .footer-telegram {
-            color: var(--primary-red);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.125rem;
-            display: block;
-            margin-bottom: 1rem;
+        .contacts-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            flex-wrap: wrap;
         }
 
-        .footer-telegram:hover {
-            opacity: 0.8;
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .footer-info {
-            color: var(--secondary-gray);
-            font-size: 0.9rem;
-            margin: 1rem 0;
+        .contact-link-icon {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-link:hover .contact-link-icon {
+            opacity: 1;
+        }
+
+        .contact-link span {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .contact-link:hover span {
+            color: rgba(255, 255, 255, 1);
         }
 
         .footer-privacy {
@@ -876,8 +1110,7 @@
             }
         }
 
-        /* Responsive */
-                /* === Cases Carousel - Horizontal Everywhere === */
+        /* === Cases Carousel === */
         .cases-container {
             display: flex;
             align-items: center;
@@ -903,15 +1136,14 @@
         }
 
         .cases-list::-webkit-scrollbar {
-            height: 6px;
+            display: none;
         }
 
-        .cases-list::-webkit-scrollbar-thumb {
-            background: var(--border-dark);
-            border-radius: 3px;
+        .cases-list {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
-        /* === Desktop: 3 Cards Visible === */
         .case-item {
             flex: 0 0 480px;
             min-width: 480px;
@@ -1021,6 +1253,38 @@
             filter: drop-shadow(0 0 6px rgba(213, 28, 28, 1));
         }
 
+        /* ===== CAROUSEL DOTS PAGINATION ===== */
+        .carousel-dots-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border-dark);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+        }
+
+        .carousel-dot.active {
+            background: var(--primary-red);
+            width: 28px;
+            border-radius: 6px;
+            box-shadow: 0 0 12px rgba(213, 28, 28, 0.6);
+        }
+
+        .carousel-dot:hover {
+            background: rgba(213, 28, 28, 0.6);
+            transform: scale(1.2);
+        }
+
         /* === Tablet: 2 Cards Visible === */
         @media (max-width: 1024px) {
             .case-item {
@@ -1034,10 +1298,8 @@
             }
         }
 
-        /* === Mobile: 1 Card Full Width - MINIMAL PHOTO === */
-
+        /* === Mobile: 1 Card Full Width === */
         @media (max-width: 768px) {
-            /* Section padding adjustment */
             section.cases-section {
                 padding: 1.5rem 1rem 1rem 1rem;
             }
@@ -1075,12 +1337,9 @@
                 overflow: hidden;
                 display: flex;
                 flex-direction: column;
-
                 box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             }
 
-
-            /* Фото карточки - компактное */
             .case-image {
                 width: 100%;
                 height: 250px;
@@ -1095,7 +1354,6 @@
                 object-fit: cover;
             }
 
-            /* Контент карточки */
             .case-item h3 {
                 font-size: 1.1rem;
                 margin: 1rem 1rem 0.3rem 1rem;
@@ -1138,354 +1396,231 @@
                 margin: 0.2rem 0;
             }
 
-            /* Скрыть кнопки прокрутки на мобильных */
             .carousel-btn {
                 display: none;
             }
-        }
-        
-        
-        /* General Mobile Overrides */
-/* Анимация красной полоски для кейсов */
-@keyframes pulseRedBar {
-  0%, 100% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-}
 
-.case-item {
-  position: relative;
-  overflow: hidden;
-}
+            .carousel-dots-container {
+                gap: 0.5rem;
+                margin-top: 1rem;
+            }
 
-/* Красная полоска на правом краю карточки с градиентом */
-.case-item::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 4px;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    var(--primary-red, #d51c1c) 30%,
-    var(--primary-red, #d51c1c) 70%,
-    transparent 100%
-  );
-  opacity: 0;
-  animation: pulseRedBar 3s ease-in-out infinite;
-}
+            .carousel-dot {
+                width: 10px;
+                height: 10px;
+            }
 
-/* Выравнивание CTA-секции с FAQ-list */
-.cta-section {
-  max-width: 800px !important;
-  width: 800px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  margin-top: 3rem !important;
-  margin-bottom: 3rem !important;
-  padding: 3rem 2rem !important;
-  box-sizing: border-box !important;
-}
-
-/* Hero section - фон во всю ширину */
-section.hero {
-  background: var(--dark-bg) !important;
-  max-width: 100% !important;
-  padding: 4rem 2rem !important;
-  margin: 0 !important;
-  width: 100% !important;
-}
-
-.hero-container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Уменьшение отступов всех section на десктопе (сверху и снизу) */
-@media (min-width: 769px) {
-  section {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
-  }
-
-  /* CTA-секция остается с оригинальным padding */
-  .cta-section {
-    padding: 3rem 2rem !important;
-  }
-
-  .case-item::after {
-    display: none;
-  }
-}
-
-/* Выравнивание кнопок на мобильной версии */
-@media (max-width: 768px) {
-  .hero-buttons,
-  .cta-buttons {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 1rem !important;
-    width: 100% !important;
-  }
-
-  .hero-buttons .btn,
-  .cta-buttons .btn {
-    width: 100% !important;
-    padding: 1.2rem !important;
-    font-size: 1.1rem !important;
-    flex: 1 !important;
-  }
-
-  .hero-buttons button.btn-primary,
-  .hero-buttons a.btn-primary,
-  .cta-buttons button.btn-primary,
-  .cta-buttons a.btn-primary {
-    min-height: auto !important;
-    height: auto !important;
-  }
-
-  /* Анимация красной полоски видна только на мобильных */
-  .case-item::after {
-    display: block;
-  }
-
-  /* Выравнивание CTA на мобильной версии */
-  .cta-section {
-    max-width: 100% !important;
-    width: calc(100% - 2rem) !important;
-    margin-left: 1rem !important;
-    margin-right: 1rem !important;
-    margin-top: 2rem !important;
-    margin-bottom: 2rem !important;
-    padding: 1.5rem 1rem 1rem 1rem !important;
-  }
-
-  /* Унифицированный padding всех блоков на мобильной версии */
-  section.advantages-section,
-  section.process-section,
-  section.reviews-section {
-    padding: 1.5rem 1rem 1rem 1rem !important;
-  }
-
-  section h2 {
-    margin-bottom: 1.5rem !important;
-  }
-}
-
-
-    /* Contact Footer Styles */
-    .contacts-footer {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 40px;
-        margin: 30px 0;
-        flex-wrap: wrap;
-    }
-
-    .contact-link {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 0;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        position: relative;
-    }
-
-    .contact-link-icon {
-        width: 32px;
-        height: 32px;
-        object-fit: contain;
-        opacity: 0.7;
-        transition: opacity 0.3s ease;
-    }
-
-    .contact-link:hover .contact-link-icon {
-        opacity: 1;
-    }
-
-    .contact-link span {
-        font-size: 14px;
-        color: rgba(255, 255, 255, 0.7);
-        font-weight: 500;
-        transition: color 0.3s ease;
-    }
-
-    .contact-link:hover span {
-        color: rgba(255, 255, 255, 1);
-    }
-
-    .contact-link-input {
-        display: none;
-        position: absolute;
-        bottom: -45px;
-        left: 0;
-        width: 200px;
-        padding: 8px 12px;
-        border: 1px solid var(--primary-red);
-        border-radius: 6px;
-        font-size: 12px;
-        background: #222;
-        color: white;
-        z-index: 100;
-    }
-
-    .contact-link:hover .contact-link-input {
-        display: block;
-    }
-
-    @media (max-width: 768px) {
-        .contacts-footer {
-            gap: 20px;
+            .carousel-dot.active {
+                width: 24px;
+            }
         }
 
-        .contact-link span {
-            font-size: 13px;
+        @keyframes pulseRedBar {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
         }
-    }
 
-</style>
-<style>
-@media (max-width: 768px) {
-  body {
-    font-size: 14px;
-    padding: 0 1rem;
-  }
+        .case-item {
+            position: relative;
+            overflow: hidden;
+        }
 
-  header .header-container,
-  .hero-container,
-  section,
-  .modal-content {
-    padding: 0 1rem;
-    width: 100%;
-    max-width: 100%;
-  }
+        .case-item::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                var(--primary-red) 30%,
+                var(--primary-red) 70%,
+                transparent 100%
+            );
+            opacity: 0;
+            animation: pulseRedBar 3s ease-in-out infinite;
+        }
 
-  nav ul {
-    flex-direction: column;
-    position: fixed;
-    top: 70px;
-    left: -100%;
-    width: 100%;
-    height: calc(100% - 70px);
-    background-color: var(--dark-section-bg);
-    padding: 2rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    transition: left 0.3s ease;
-    border-bottom: 1px solid var(--border-dark);
-    z-index: 1100;
-  }
+        .cta-section {
+            max-width: 800px !important;
+            width: 800px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            margin-top: 3rem !important;
+            margin-bottom: 3rem !important;
+            padding: 3rem 2rem !important;
+            box-sizing: border-box !important;
+        }
 
-  nav ul.active {
-    left: 0;
-  }
+        section.hero {
+            background: var(--dark-bg) !important;
+            max-width: 100% !important;
+            padding: 4rem 2rem !important;
+            margin: 0 !important;
+            width: 100% !important;
+        }
 
-  nav ul li {
-    margin-bottom: 1.5rem;
-  }
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-  .hamburger {
-    display: flex;
-  }
+        @media (min-width: 769px) {
+            section {
+                padding-top: 3rem !important;
+                padding-bottom: 3rem !important;
+            }
 
-  .faq-list,
-  .cases-grid,
-  .advantages-grid,
-  .reviews-grid {
-    display: grid;
-    grid-template-columns: 1fr !important;
-  }
+            .cta-section {
+                padding: 3rem 2rem !important;
+            }
 
-  .faq-item {
-    padding: 1rem;
-    font-size: 0.95rem;
-  }
+            .case-item::after {
+                display: none;
+            }
+        }
 
-  button.btn {
-    width: 100%;
-    padding: 1rem;
-    font-size: 1.1rem;
-  }
+        @media (max-width: 768px) {
+            .hero-buttons,
+            .cta-buttons {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 1rem !important;
+                width: 100% !important;
+            }
 
-  .modal-content {
-    max-width: 90vw;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-}
-@media (max-width: 768px) {
-  .auction-cards,
-  .advantages-grid,
-  .cases-grid,
-  .reviews-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-  }
+            .hero-buttons .btn,
+            .cta-buttons .btn {
+                width: 100% !important;
+                padding: 1.2rem !important;
+                font-size: 1.1rem !important;
+                flex: 1 !important;
+            }
 
-  .auction-card,
-  .advantage-item,
-  .case-item,
-  .review-item {
-    display: block !important;
-    width: 100% !important;
-    margin-bottom: 1rem;
-  }
+            .hero-buttons button.btn-primary,
+            .hero-buttons a.btn-primary,
+            .cta-buttons button.btn-primary,
+            .cta-buttons a.btn-primary {
+                min-height: auto !important;
+                height: auto !important;
+            }
 
-  .auction-card p,
-  .advantage-item p,
-  .case-item p,
-  .review-item p {
-    font-size: 14px;
-  }
+            .case-item::after {
+                display: block;
+            }
 
-  .auction-cards,
-  .advantages-grid,
-  .cases-grid,
-  .reviews-grid,
-  .auction-card,
-  .advantage-item,
-  .case-item,
-  .review-item {
-    overflow: visible !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-}
-@media (max-width: 768px) {
-  .auction-cards,
-  .advantages-grid,
-  .cases-grid,
-  .reviews-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    overflow: visible !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
+            .cta-section {
+                max-width: 100% !important;
+                width: calc(100% - 2rem) !important;
+                margin-left: 1rem !important;
+                margin-right: 1rem !important;
+                margin-top: 2rem !important;
+                margin-bottom: 2rem !important;
+                padding: 1.5rem 1rem 1rem 1rem !important;
+            }
 
-  .auction-card,
-  .advantage-item,
-  .case-item,
-  .review-item {
-    display: block !important;
-    width: 100% !important;
-    margin-bottom: 1rem;
-  }
+            section.advantages-section,
+            section.process-section,
+            section.reviews-section {
+                padding: 1.5rem 1rem 1rem 1rem !important;
+            }
 
-  .auction-card p,
-  .advantage-item p,
-  .case-item p,
-  .review-item p {
-    font-size: 14px !important;
-  }
-}
-</style>
+            section h2 {
+                margin-bottom: 1.5rem !important;
+            }
+        }
+
+        /* Separator lines */
+        .divider {
+            height: 5px;
+            width: 80%;
+            margin: 2rem auto;
+            background: linear-gradient(90deg, transparent 0%, #d51c1c 60%, transparent 100%);
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+                padding: 0 1rem;
+            }
+
+            header .header-container,
+            .hero-container,
+            section,
+            .modal-content {
+                padding: 0 1rem;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            nav ul {
+                flex-direction: column;
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100% - 70px);
+                background-color: var(--dark-section-bg);
+                padding: 2rem;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+                transition: left 0.3s ease;
+                border-bottom: 1px solid var(--border-dark);
+                z-index: 1100;
+            }
+
+            nav ul.active {
+                left: 0;
+            }
+
+            nav ul li {
+                margin-bottom: 1.5rem;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .faq-list,
+            .cases-grid,
+            .advantages-grid,
+            .reviews-grid {
+                display: grid;
+                grid-template-columns: 1fr !important;
+            }
+
+            .faq-item {
+                padding: 1rem;
+                font-size: 0.95rem;
+            }
+
+            button.btn {
+                width: 100%;
+                padding: 1rem;
+                font-size: 1.1rem;
+            }
+
+            .modal-content {
+                max-width: 90vw;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            .contacts-footer {
+                gap: 20px;
+            }
+
+            .contact-link span {
+                font-size: 13px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -1514,7 +1649,7 @@ section.hero {
     <section class="hero">
         <div class="hero-container">
             <h1>Авто из Японии под ключ</h1>
-            <p class="hero-subtitle">Подбор на аукционах, полная проверка, выкуп, логистика и растаможка. Отчёт по каждому лоту и прозрачные платежи.</p>
+            <p class="hero-subtitle">Подбор на аукционах, полная проверка, выкуп, логистика и растаможка. Отчёт по каждому лоту и прозрачные платежи. Ответим в течение 15 минут.</p>
                         
             <div class="hero-buttons">
                 <button class="btn btn-primary" onclick="openModal()">Оставить заявку</button>
@@ -1538,8 +1673,8 @@ section.hero {
         </div>
     </section>
 
-    <!-- Hero Divider -->
-    <div style="height: 5px; width: 80%; margin: 2rem auto; background: linear-gradient(90deg, transparent 0%, #d51c1c 60%, transparent 100%); border-radius: 4px;"></div>
+    <!-- КРАСНАЯ РАЗДЕЛИТЕЛЬНАЯ ЛИНИЯ -->
+    <div class="divider"></div>
 
     <!-- Advantages Section -->
     <section class="advantages-section">
@@ -1562,6 +1697,9 @@ section.hero {
             </div>
         </div>
     </section>
+
+    <!-- КРАСНАЯ РАЗДЕЛИТЕЛЬНАЯ ЛИНИЯ -->
+    <div class="divider"></div>
 
     <!-- How It Works Section -->
     <section class="process-section">
@@ -1605,10 +1743,10 @@ section.hero {
         </div>
     </section>
 
-    <!-- Cases Section -->
+    <!-- КРАСНАЯ РАЗДЕЛИТЕЛЬНАЯ ЛИНИЯ -->
+    <div class="divider"></div>
 
-
-    <!-- Cases Section - Minimal Photo Mobile -->
+    <!-- Cases Section с DOTS PAGINATION -->
     <section id="cases" class="cases-section">
         <h2>Кейсы</h2>
         <div class="cases-container">
@@ -1621,56 +1759,56 @@ section.hero {
             <div class="carousel-wrapper">
                 <div class="cases-list" id="casesListMobile">
                     <div class="case-item">
-                        <div class="case-image"><img src=Мерседес.jpg></div>
+                        <div class="case-image"><img src="Мерседес.jpg"></div>
                         <h3>Mercedes-Benz C180</h3>
                         <p class="details">Пробег: 42 000 км • Двигатель: 1,6 л, 156 л.с. • Оценка: 4.5 балла</p>
                         <p class="budget">Бюджет клиента: 1 650 000 ₽</p>
                         <div class="result"><p class="price">Итого: 1 600 000 ₽</p><p class="savings">Экономия: 50 000 ₽</p></div>
                     </div>
                     <div class="case-item">
-                        <div class="case-image"><img src=Фит.jpg></div>
+                        <div class="case-image"><img src="Фит.jpg"></div>
                         <h3>Honda Fit 2009</h3>
                         <p class="details">Пробег: 84 000 км • Двигатель: 1.3 л, 100 л.с. • Оценка: 4 балла</p>
                         <p class="budget">Бюджет клиента: 870 000 ₽</p>
                         <div class="result"><p class="price">Итого: 800 000 ₽</p><p class="savings">Экономия: 70 000 ₽</p></div>
                     </div>
                     <div class="case-item">
-                        <div class="case-image"><img src=Мазда.jpg></div>
+                        <div class="case-image"><img src="Мазда.jpg"></div>
                         <h3>Mazda Axela 2016</h3>
                         <p class="details">Пробег: 87 000 км • Двигатель: 1,5 л, 111 л.с. • Оценка: 4,5 балла</p>
                         <p class="budget">Бюджет клиента: 1 350 000 ₽</p>
                         <div class="result"><p class="price">Итого: 1 200 000 ₽</p><p class="savings">Экономия: 150 000 ₽</p></div>
                     </div>
                     <div class="case-item">
-                        <div class="case-image"><img src=Фрид.jpg></div>
+                        <div class="case-image"><img src="Фрид.jpg"></div>
                         <h3>Honda Freed 2011</h3>
                         <p class="details">Пробег: 134 000 км • Двигатель: 1.5 л, 118 л.с. • Оценка: 4 балла</p>
                         <p class="budget">Бюджет клиента: 770 000 ₽</p>
                         <div class="result"><p class="price">Итого: 700 000 ₽</p><p class="savings">Экономия: 70 000 ₽</p></div>
                     </div>
                     <div class="case-item">
-                        <div class="case-image"><img src=Королла.jpg></div>
+                        <div class="case-image"><img src="Королла.jpg"></div>
                         <h3>Toyota Corolla Fielder 2019</h3>
                         <p class="details">Пробег: 20 260 км • Двигатель: 1,5 л, 109 л.с. • Оценка: 4,5 балла</p>
                         <p class="budget">Бюджет клиента: 2 000 000 ₽</p>
                         <div class="result"><p class="price">Итого: 1 800 000 ₽</p><p class="savings">Экономия: 200 000 ₽</p></div>
                     </div>
                     <div class="case-item">
-                        <div class="case-image"><img src=Везел.jpg></div>
+                        <div class="case-image"><img src="Везел.jpg"></div>
                         <h3>Honda Vezel 2016</h3>
                         <p class="details">Пробег: 94 000 км • Двигатель: 1,5 л, 131 л.с. • Оценка: 4 балла</p>
                         <p class="budget">Бюджет клиента: 1 770 000 ₽</p>
                         <div class="result"><p class="price">Итого: 1 650 000 ₽</p><p class="savings">Экономия: 70 000 ₽</p></div>
                     </div>
                     <div class="case-item">
-                        <div class="case-image"><img src=Ноте.jpg></div>
+                        <div class="case-image"><img src="Ноте.jpg"></div>
                         <h3>Nissan Note 2014</h3>
                         <p class="details">Пробег: 109 000 км • Двигатель: 1,2 л, 98 л.с. • Оценка: 4 балла</p>
                         <p class="budget">Бюджет клиента: 700 000 ₽</p>
                         <div class="result"><p class="price">Итого: 620 000 ₽</p><p class="savings">Экономия: 80 000 ₽</p></div>
                     </div>
                     <div class="case-item">
-                        <div class="case-image"><img src=Гольф.jpg></div>
+                        <div class="case-image"><img src="Гольф.jpg"></div>
                         <h3>Volkswagen Golf 2009</h3>
                         <p class="details">Пробег: 47 000 км • Двигатель 1,4 л, 160 л.с. • Оценка: 4,5 балла</p>
                         <p class="budget">Бюджет клиента: 900 000 ₽</p>
@@ -1685,9 +1823,15 @@ section.hero {
                 </svg>
             </button>
         </div>
+
+        <!-- DOTS PAGINATION КОНТЕЙНЕР -->
+        <div class="carousel-dots-container" id="dotsContainer"></div>
     </section>
 
-        <!-- Reviews Section -->
+    <!-- КРАСНАЯ РАЗДЕЛИТЕЛЬНАЯ ЛИНИЯ -->
+    <div class="divider"></div>
+
+    <!-- Reviews Section -->
     <section class="reviews-section">
         <h2>Отзывы клиентов</h2>
         <div class="reviews-grid">
@@ -1705,6 +1849,9 @@ section.hero {
             </div>
         </div>
     </section>
+
+    <!-- КРАСНАЯ РАЗДЕЛИТЕЛЬНАЯ ЛИНИЯ -->
+    <div class="divider"></div>
 
     <!-- FAQ Section -->
     <section id="faq">
@@ -1732,7 +1879,7 @@ section.hero {
     <!-- CTA Section -->
     <div class="cta-section">
         <h2>Готовы подобрать авто?</h2>
-        <p>Оставьте заявку на сайте или напишите в наш Telegram — мы перезвоним Вам и пришлём подходящие лоты сегодня.</p>
+        <p>Оставьте заявку на сайте или напишите в наш Telegram — ответим за 15 минут и пришлём подходящие лоты сегодня.</p>
         <div class="cta-buttons">
     <button class="btn btn-primary" onclick="openModal()">Оставить заявку</button>
     <a href="https://t.me/AutoSeller24?start=directdemo" target="_blank" class="btn btn-primary">Перейти в Telegram</a>
@@ -1764,18 +1911,51 @@ section.hero {
                             </a>
                         </div>
                     </div>
-            <div class="contacts-footer">
+            <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="modal-header">
+                <h2>Оставить заявку</h2>
+                <p class="modal-subtitle">Заполните форму для связи, и мы свяжемся с вами в течение 15 минут.</p>
+            </div>
+            <form onsubmit="handleFormSubmit(event)" class="modern-form">
+                <div class="floating-input">
+                    <input type="text" id="name" name="name" placeholder=" " required>
+                    <label for="name">Ваше имя</label>
+                    <div class="input-border"></div>
                 </div>
-            
-            <p class="footer-privacy">Политика конфиденциальности: Мы обрабатываем персональные данные в соответствии с законодательством РФ. Данные используются только для связи с клиентом и не передаются третьим лицам.</p>
+                <div class="floating-input">
+                    <input type="tel" id="phone" name="phone" placeholder=" " required>
+                    <label for="phone">Номер телефона</label>
+                    <div class="input-border"></div>
+                    <span class="input-hint">Например: +7 (999) 123-45-67</span>
+                </div>
+                <div class="form-privacy">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 1L3 3V7C3 10.5 5.5 13.5 8 14.5C10.5 13.5 13 10.5 13 7V3L8 1Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    </svg>
+                    <span>Отправляя заявку, вы согласаетесь на обработку личных данных</span>
+                </div>
+                <button type="submit" class="btn-submit">
+                    <span>Отправить заявку</button>
+            </form>
+        </div>
+    </div>
+
+<p class="footer-privacy">Политика конфиденциальности: Мы обрабатываем персональные данные в соответствии с законодательством РФ. Данные используются только для связи с клиентом и не передаются третьим лицам. © 2025 AutoSeller24. Все права защищены.</p>
         </div>
     </footer>
 
-    <!-- Modal Form -->
-    <div class="modal" id="modal">
-  <div class="modal-content">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    <h2>Оставить заявку</h2>
+    <!-- Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+           <h2>Оставить заявку</h2>
     <p style="color: var(--secondary-gray); margin-bottom: 1.5rem;">
       Заполните форму для связи, и мы свяжемся с вами в течение 15 минут.
     </p>
@@ -1791,149 +1971,92 @@ section.hero {
       <p style="font-size:0.95rem; color:var(--text-secondary); margin-bottom:1.2rem;">
         Отправляя заявку, вы соглашаетесь на обработку персональных данных.
       </p>
-      <button type="submit" class="btn btn-primary" style="width:100%;">Отправить</button>
-    </form>
-  </div>
-</div>
+               <button type="submit" class="btn btn-primary" style="width: 100%;">Отправить</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Success Message -->
     <div class="success-message" id="successMessage">
-        Спасибо! Мы свяжемся с вами в течение 15 минут
+        ✓ Спасибо! Ваша заявка отправлена. Мы свяжемся с вами в течение 15 минут.
     </div>
 
-    <script>
-        // Application state
-        const applicationState = {
-            applications: []
-        };
-
-        // Header shrink on scroll
-        let lastScrollY = window.scrollY;
-        window.addEventListener("scroll", () => {
-            const header = document.querySelector("header");
-            if(window.scrollY > 30) {
-                header.classList.add("scrolled");
-            } else {
-                header.classList.remove("scrolled");
-            }
-            lastScrollY = window.scrollY;
-        });
-
-        // Hamburger menu
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-
-        // Close menu when clicking on a link
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-            });
-        });
-
-        // Smooth scroll for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                if (href !== '#') {
-                    e.preventDefault();
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                }
-            });
-        });
-
-        // Modal functions
+<script>
+        // ============ MODAL FUNCTIONS ===============
         function openModal() {
-            document.getElementById('modal').classList.add('active');
+            document.getElementById('contactModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-            document.body.style.overflow = '';
+            document.getElementById('contactModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
 
-        // Close modal on background click
-        document.getElementById('modal').addEventListener('click', (e) => {
-            if (e.target.id === 'modal') {
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('contactModal');
+            if (e.target === modal) closeModal();
+        });
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const successMsg = document.getElementById('successMessage');
+            successMsg.classList.add('active');
+            setTimeout(() => {
+                successMsg.classList.remove('active');
                 closeModal();
+            }, 3000);
+            e.target.reset();
+        }
+
+        // ============ HAMBURGER MENU ===============
+        document.getElementById('hamburger').addEventListener('click', function() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('#navMenu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('navMenu').classList.remove('active');
+            });
+        });
+
+        // ============ HEADER SCROLL EFFECT ===============
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
             }
         });
 
-        // Form submission
-        document.getElementById('contactForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const formData = {
-                name: document.getElementById('name').value,
-                phone: document.getElementById('phone').value,
-                budget: document.getElementById('budget').value,
-                model: document.getElementById('model').value,
-                timestamp: new Date().toISOString()
-            };
-
-            // Store in application state
-            applicationState.applications.push(formData);
-            // Reset form
-            e.target.reset();
-
-            // Close modal
-            closeModal();
-
-            // Show success message
-            const successMessage = document.getElementById('successMessage');
-            successMessage.classList.add('active');
-
-            setTimeout(() => {
-                successMessage.classList.remove('active');
-            }, 5000);
-        });
-        document.getElementById('successMessage').addEventListener('click', function() {
-            this.classList.remove('active');
-        });
-
         // ============ DYNAMIC SCROLL APPEAR ===============
-        // Advantages animation
         function appearByScroll(selector, className, delay=120) {
             const items = document.querySelectorAll(selector);
             const io = new IntersectionObserver((entries, observer) => {
                 entries.forEach((entry, idx) => {
                     if (entry.isIntersecting) {
-                        setTimeout(()=>{
-                            entry.target.classList.add(className);
-                        }, idx * delay);
+                        setTimeout(()=>{ entry.target.classList.add(className); }, idx * delay);
                         observer.unobserve(entry.target);
                     }
                 });
-            }, {
-                threshold: 0.1
-            });
+            }, { threshold: 0.1 });
             items.forEach(item => io.observe(item));
         }
+
         appearByScroll('.advantage-card','visible', 120);
         appearByScroll('.hero-card', 'visible', 120);
         appearByScroll('.case-card', 'visible', 180);
         appearByScroll('.review-card', 'visible', 120);
 
-        // Process steps, drawn one by one
         const stepEls = document.querySelectorAll('.step');
         const ioSteps = new IntersectionObserver((entries) => {
             entries.forEach((entry, idx) => {
                 if (entry.isIntersecting) {
                     let base = 0;
                     stepEls.forEach((el, i) => {
-                        setTimeout(()=>{
-                            el.classList.add('visible');
-                        }, base + i * 350);
+                        setTimeout(()=>{ el.classList.add('visible'); }, base + i * 350);
                     });
                     ioSteps.disconnect();
                 }
@@ -1941,63 +2064,52 @@ section.hero {
         }, { threshold: 0.2 } );
         if(stepEls.length) ioSteps.observe(stepEls[0]);
 
-        // Parallax in hero
         const hero = document.querySelector('.hero');
         let parallaxY = 0;
         window.addEventListener('scroll', function() {
             const scrollTop = window.scrollY;
             parallaxY = scrollTop*0.18;
             hero.style.backgroundPosition = `center ${parallaxY}px`;
-            // Decorative floats in CTA section
             const cta = document.querySelector('.cta-section');
             if(cta) cta.style.backgroundPosition = `center ${Math.floor(scrollTop*0.14)}px`;
         });
 
-        // Animated number counter for price
-        function animateCount(numEl, start, end, duration=1200) {
-            const step = (end-start) / (duration/22);
-            let val = start;
-            function run() {
-                val += step;
-                if (val>=end) { numEl.textContent = end.toLocaleString(); return; }
-                numEl.textContent = Math.floor(val).toLocaleString();
-                requestAnimationFrame(run);
-            }
-            run();
-        }
-        // === Animated stars in reviews ===
-        document.querySelectorAll('.case-card').forEach(card => {
-            // Just for visual: n stars & pulse
-            const details = card.querySelector('.case-details');
-            if (details) {
-                let stars = '';
-                let ratingMatch = details.textContent.match(/Оценка: ([\d\.]+)/);
-                let rating = ratingMatch ? Number(ratingMatch[1]):4;
-                for(let i=1; i<=5; i++){
-                    stars += `<span class="star" style="color:${i<=rating?'#ffd700':'#ecebd5'};display:inline-block;animation:pulseStar 1s infinite ${i*0.2}s;">&#9733;</span>`;
-                }
-                details.innerHTML += ' '+stars;
-            }
-        });
-        // Star pulse animation
-        const style = document.createElement('style');
-        style.innerHTML = `@keyframes pulseStar{0%,100%{transform:scale(1);}50%{transform:scale(1.12);filter:drop-shadow(0 0 2px var(--primary-red));}}`;
-        document.head.appendChild(style);
+        // ============ CAROUSEL DOTS PAGINATION ===============
+        function initCarouselDots() {
+            const list = document.querySelector('.cases-list');
+            const container = document.getElementById('dotsContainer');
+            const cards = document.querySelectorAll('.case-item');
 
-        // Decorative SVG/gradients
-        function insertDivider(section, direction='horizontal'){
-            const div = document.createElement('div');
-            div.style.height = direction==='horizontal'?'5px':'80px';
-            div.style.width = direction==='horizontal'?'80%':'5px';
-            div.style.margin = direction==='horizontal'?'2rem auto':'auto 2rem';
-            div.style.background = 'linear-gradient(90deg, transparent 0%, #d51c1c 60%, transparent 100%)';
-            div.style.borderRadius = '4px';
-            section.parentNode.insertBefore(div, section.nextSibling);
+            if (!list || !container || cards.length === 0) return;
+
+            // Создаём точки
+            cards.forEach((card, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'carousel-dot ' + (index === 0 ? 'active' : '');
+                dot.setAttribute('data-index', index);
+                dot.addEventListener('click', () => {
+                    const cardWidth = card.offsetWidth + 32;
+                    list.scrollLeft = cardWidth * index;
+                    updateDots();
+                });
+                container.appendChild(dot);
+            });
+
+            function updateDots() {
+                const scrollLeft = list.scrollLeft;
+                const cardWidth = cards[0].offsetWidth + 32;
+                const currentIndex = Math.round(scrollLeft / cardWidth);
+
+                document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentIndex);
+                });
+            }
+
+            list.addEventListener('scroll', updateDots);
+            window.addEventListener('resize', updateDots);
         }
-        document.querySelectorAll('section').forEach((sec,i) => {
-            if(i!==0 && i<5 && (sec.className||'').indexOf('cta-section')===-1) insertDivider(sec);
-        });
-    
+
+        document.addEventListener('DOMContentLoaded', initCarouselDots);
 
         function scrollCases(direction) {
             const list = document.querySelector('.cases-list');
@@ -2019,6 +2131,23 @@ section.hero {
             const finalScroll = direction > 0 ? scrollAmount : -scrollAmount;
             list.scrollBy({ left: finalScroll, behavior: 'smooth' });
         }
+
+        document.querySelectorAll('.case-card').forEach(card => {
+            const details = card.querySelector('.case-details');
+            if (details) {
+                let stars = '';
+                let ratingMatch = details.textContent.match(/Оценка: ([\d\.]+)/);
+                let rating = ratingMatch ? Number(ratingMatch[1]):4;
+                for(let i=1; i<=5; i++){
+                    stars += `<span class="star" style="color:${i<=rating?'#ffd700':'#ecebd5'};display:inline-block;animation:pulseStar 1s infinite ${i*0.2}s;">&#9733;</span>`;
+                }
+                details.innerHTML += ' '+stars;
+            }
+        });
+
+        const style = document.createElement('style');
+        style.innerHTML = `@keyframes pulseStar{0%,100%{transform:scale(1);}50%{transform:scale(1.12);filter:drop-shadow(0 0 2px var(--primary-red));}}`;
+        document.head.appendChild(style);
 </script>
 </body>
 </html>
